@@ -3,20 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Samanvita's Report Card ✨</title>
+<title>Samanvita's Report Card 💝</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --primary: #6C63FF;
-    --secondary: #FF6584;
-    --accent1: #43E97B;
-    --accent2: #38F9D7;
-    --accent3: #FA709A;
-    --accent4: #FEE140;
-    --bg: #0F0E17;
-    --card: #1A1932;
-    --text: #FFFFFE;
-    --muted: #A7A9BE;
+    --primary: #E91E63;
+    --secondary: #FF4081;
+    --accent1: #FF80AB;
+    --accent2: #F48FB1;
+    --accent3: #FCE4EC;
+    --accent4: #AD1457;
+    --bg: #1A0A14;
+    --card: #2D1525;
+    --text: #FFF0F5;
+    --muted: #C48BA0;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -35,13 +35,33 @@
     height: 600px;
     border-radius: 50%;
     filter: blur(150px);
-    opacity: 0.15;
+    opacity: 0.12;
     pointer-events: none;
     z-index: 0;
   }
-  .glow1 { background: var(--primary); top: -200px; left: -100px; }
-  .glow2 { background: var(--secondary); bottom: -200px; right: -100px; }
-  .glow3 { background: var(--accent1); top: 50%; left: 50%; transform: translate(-50%,-50%); }
+  .glow1 { background: #E91E63; top: -200px; left: -100px; }
+  .glow2 { background: #FF4081; bottom: -200px; right: -100px; }
+  .glow3 { background: #C2185B; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+
+  /* Floating hearts background */
+  .hearts-bg {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .floating-heart {
+    position: absolute;
+    font-size: 1.2rem;
+    opacity: 0.08;
+    animation: floatHeart linear infinite;
+  }
+  @keyframes floatHeart {
+    0% { transform: translateY(100vh) rotate(0deg); }
+    100% { transform: translateY(-100px) rotate(360deg); }
+  }
 
   .container {
     max-width: 900px;
@@ -59,7 +79,7 @@
 
   .badge {
     display: inline-block;
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    background: linear-gradient(135deg, #E91E63, #FF4081);
     padding: 6px 20px;
     border-radius: 50px;
     font-size: 0.8rem;
@@ -67,13 +87,14 @@
     letter-spacing: 1.5px;
     text-transform: uppercase;
     margin-bottom: 16px;
+    box-shadow: 0 4px 20px rgba(233,30,99,0.3);
   }
 
   h1 {
     font-family: 'Poppins', sans-serif;
     font-size: 3rem;
     font-weight: 800;
-    background: linear-gradient(135deg, #fff 0%, #c4b5fd 50%, #f0abfc 100%);
+    background: linear-gradient(135deg, #fff 0%, #FF80AB 50%, #F48FB1 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -85,6 +106,18 @@
     color: var(--muted);
     font-size: 1.1rem;
     font-weight: 400;
+  }
+  .subtitle .heart-icon {
+    color: #E91E63;
+    -webkit-text-fill-color: #E91E63;
+    animation: heartbeat 1.2s ease-in-out infinite;
+  }
+
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    15% { transform: scale(1.15); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.1); }
   }
 
   .stats-row {
@@ -98,7 +131,7 @@
 
   .stat-card {
     background: var(--card);
-    border: 1px solid rgba(255,255,255,0.06);
+    border: 1px solid rgba(233,30,99,0.15);
     border-radius: 20px;
     padding: 24px 32px;
     text-align: center;
@@ -110,7 +143,7 @@
   }
   .stat-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 20px 40px rgba(108,99,255,0.15);
+    box-shadow: 0 20px 40px rgba(233,30,99,0.2);
   }
 
   .stat-value {
@@ -118,9 +151,9 @@
     font-size: 2rem;
     font-weight: 800;
   }
-  .stat-value.highlight { color: var(--accent1); }
-  .stat-value.percent { color: var(--accent2); }
-  .stat-value.grade { color: var(--accent4); }
+  .stat-value.highlight { color: #FF80AB; }
+  .stat-value.percent { color: #F06292; }
+  .stat-value.grade { color: #FF4081; }
 
   .stat-label {
     color: var(--muted);
@@ -140,7 +173,7 @@
 
   .subject-card {
     background: var(--card);
-    border: 1px solid rgba(255,255,255,0.06);
+    border: 1px solid rgba(233,30,99,0.1);
     border-radius: 24px;
     padding: 28px;
     position: relative;
@@ -156,7 +189,7 @@
 
   .subject-card:hover {
     transform: translateY(-6px);
-    box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+    box-shadow: 0 25px 50px rgba(233,30,99,0.15);
   }
 
   .subject-card::before {
@@ -166,11 +199,11 @@
     height: 4px;
     border-radius: 4px 4px 0 0;
   }
-  .subject-card:nth-child(1)::before { background: linear-gradient(90deg, #6C63FF, #B06AB3); }
-  .subject-card:nth-child(2)::before { background: linear-gradient(90deg, #43E97B, #38F9D7); }
-  .subject-card:nth-child(3)::before { background: linear-gradient(90deg, #FA709A, #FEE140); }
-  .subject-card:nth-child(4)::before { background: linear-gradient(90deg, #A18CD1, #FBC2EB); }
-  .subject-card:nth-child(5)::before { background: linear-gradient(90deg, #F6D365, #FDA085); }
+  .subject-card:nth-child(1)::before { background: linear-gradient(90deg, #E91E63, #FF4081); }
+  .subject-card:nth-child(2)::before { background: linear-gradient(90deg, #AD1457, #E91E63); }
+  .subject-card:nth-child(3)::before { background: linear-gradient(90deg, #F06292, #FF80AB); }
+  .subject-card:nth-child(4)::before { background: linear-gradient(90deg, #C2185B, #F48FB1); }
+  .subject-card:nth-child(5)::before { background: linear-gradient(90deg, #FF4081, #FCE4EC); }
 
   .subject-header {
     display: flex;
@@ -188,11 +221,11 @@
     justify-content: center;
     font-size: 1.4rem;
   }
-  .icon-maths { background: rgba(108,99,255,0.15); }
-  .icon-science { background: rgba(67,233,123,0.15); }
-  .icon-social { background: rgba(250,112,154,0.15); }
-  .icon-english { background: rgba(161,140,209,0.15); }
-  .icon-german { background: rgba(246,211,101,0.15); }
+  .icon-maths { background: rgba(233,30,99,0.15); }
+  .icon-science { background: rgba(173,20,87,0.15); }
+  .icon-social { background: rgba(240,98,146,0.15); }
+  .icon-english { background: rgba(194,24,91,0.15); }
+  .icon-german { background: rgba(255,64,129,0.15); }
 
   .subject-name {
     font-family: 'Poppins', sans-serif;
@@ -216,7 +249,7 @@
   .progress-bar {
     width: 100%;
     height: 10px;
-    background: rgba(255,255,255,0.06);
+    background: rgba(233,30,99,0.1);
     border-radius: 10px;
     overflow: hidden;
     margin-bottom: 10px;
@@ -228,11 +261,11 @@
     transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
     width: 0;
   }
-  .fill-maths { background: linear-gradient(90deg, #6C63FF, #B06AB3); }
-  .fill-science { background: linear-gradient(90deg, #43E97B, #38F9D7); }
-  .fill-social { background: linear-gradient(90deg, #FA709A, #FEE140); }
-  .fill-english { background: linear-gradient(90deg, #A18CD1, #FBC2EB); }
-  .fill-german { background: linear-gradient(90deg, #F6D365, #FDA085); }
+  .fill-maths { background: linear-gradient(90deg, #E91E63, #FF4081); }
+  .fill-science { background: linear-gradient(90deg, #AD1457, #E91E63); }
+  .fill-social { background: linear-gradient(90deg, #F06292, #FF80AB); }
+  .fill-english { background: linear-gradient(90deg, #C2185B, #F48FB1); }
+  .fill-german { background: linear-gradient(90deg, #FF4081, #FCE4EC); }
 
   .percentage {
     text-align: right;
@@ -243,7 +276,7 @@
 
   .chart-section {
     background: var(--card);
-    border: 1px solid rgba(255,255,255,0.06);
+    border: 1px solid rgba(233,30,99,0.1);
     border-radius: 24px;
     padding: 36px;
     margin-bottom: 50px;
@@ -297,7 +330,7 @@
     transform: translateX(-50%);
     width: 60%;
     height: 8px;
-    background: rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.12);
     border-radius: 4px;
   }
 
@@ -319,7 +352,7 @@
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 8px;
-    background: linear-gradient(135deg, var(--accent4), var(--accent3));
+    background: linear-gradient(135deg, #FF4081, #E91E63);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -330,6 +363,14 @@
     font-size: 0.9rem;
   }
 
+  .valentine-msg {
+    margin-top: 20px;
+    font-size: 0.85rem;
+    color: #F06292;
+    opacity: 0.7;
+  }
+
+  /* Heart confetti */
   .confetti {
     position: fixed;
     top: 0; left: 0;
@@ -339,18 +380,18 @@
     overflow: hidden;
   }
 
-  .confetti-piece {
+  .confetti-heart {
     position: absolute;
-    width: 10px;
-    height: 10px;
-    top: -20px;
-    animation: confettiFall linear forwards;
-    opacity: 0.8;
+    top: -30px;
+    font-size: 1.2rem;
+    animation: heartFall linear forwards;
+    opacity: 0.9;
   }
 
-  @keyframes confettiFall {
-    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  @keyframes heartFall {
+    0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+    50% { opacity: 0.8; }
+    100% { transform: translateY(100vh) rotate(360deg) scale(0.5); opacity: 0; }
   }
 
   @keyframes fadeInUp {
@@ -374,13 +415,14 @@
 <div class="bg-glow glow2"></div>
 <div class="bg-glow glow3"></div>
 
+<div class="hearts-bg" id="heartsBg"></div>
 <div class="confetti" id="confetti"></div>
 
 <div class="container">
   <div class="hero">
-    <div class="badge">🎓 Class IX — CBSE Finals 2025</div>
+    <div class="badge">💝 Class IX — CBSE Finals 2025</div>
     <h1>Samanvita's Report Card</h1>
-    <p class="subtitle">A stellar year. Here's how she did ⚡</p>
+    <p class="subtitle">A stellar year. Here's how she did <span class="heart-icon">❤️</span></p>
   </div>
 
   <div class="stats-row">
@@ -393,7 +435,7 @@
       <div class="stat-label">Overall</div>
     </div>
     <div class="stat-card">
-      <div class="stat-value grade">A</div>
+      <div class="stat-value grade">A 💕</div>
       <div class="stat-label">Grade</div>
     </div>
   </div>
@@ -456,44 +498,45 @@
   </div>
 
   <div class="chart-section">
-    <div class="chart-title">📊 Performance Overview</div>
+    <div class="chart-title">💘 Performance Overview</div>
     <div class="bar-chart">
       <div class="bar-item">
         <div class="bar-value">62.5%</div>
-        <div class="bar" style="height: 0; background: linear-gradient(180deg, #6C63FF, #B06AB3);" data-height="62.5"></div>
+        <div class="bar" style="height: 0; background: linear-gradient(180deg, #E91E63, #FF4081);" data-height="62.5"></div>
         <div class="bar-label">Maths</div>
       </div>
       <div class="bar-item">
         <div class="bar-value">85%</div>
-        <div class="bar" style="height: 0; background: linear-gradient(180deg, #43E97B, #38F9D7);" data-height="85"></div>
+        <div class="bar" style="height: 0; background: linear-gradient(180deg, #AD1457, #E91E63);" data-height="85"></div>
         <div class="bar-label">Science</div>
       </div>
       <div class="bar-item">
         <div class="bar-value">85%</div>
-        <div class="bar" style="height: 0; background: linear-gradient(180deg, #FA709A, #FEE140);" data-height="85"></div>
+        <div class="bar" style="height: 0; background: linear-gradient(180deg, #F06292, #FF80AB);" data-height="85"></div>
         <div class="bar-label">Social</div>
       </div>
       <div class="bar-item">
         <div class="bar-value">93.8%</div>
-        <div class="bar" style="height: 0; background: linear-gradient(180deg, #A18CD1, #FBC2EB);" data-height="93.75"></div>
+        <div class="bar" style="height: 0; background: linear-gradient(180deg, #C2185B, #F48FB1);" data-height="93.75"></div>
         <div class="bar-label">English</div>
       </div>
       <div class="bar-item">
         <div class="bar-value">90%</div>
-        <div class="bar" style="height: 0; background: linear-gradient(180deg, #F6D365, #FDA085);" data-height="90"></div>
+        <div class="bar" style="height: 0; background: linear-gradient(180deg, #FF4081, #FCE4EC);" data-height="90"></div>
         <div class="bar-label">German</div>
       </div>
     </div>
   </div>
 
   <div class="footer">
-    <div class="congrats">🌟 Congratulations Samanvita! 🌟</div>
+    <div class="congrats">💖 Congratulations Samanvita! 💖</div>
     <p class="footer-text">On to Class X — keep shining! ✨</p>
+    <p class="valentine-msg">Happy Valentine's Day 2025 💌</p>
   </div>
 </div>
 
 <script>
-  // Animate progress bars
+  // Animate progress bars & chart bars
   window.addEventListener('load', () => {
     setTimeout(() => {
       document.querySelectorAll('.progress-fill').forEach(el => {
@@ -504,22 +547,33 @@
       });
     }, 300);
 
-    // Confetti
+    // Heart confetti
     const container = document.getElementById('confetti');
-    const colors = ['#6C63FF','#FF6584','#43E97B','#FEE140','#A18CD1','#38F9D7','#FDA085'];
-    for (let i = 0; i < 60; i++) {
-      const piece = document.createElement('div');
-      piece.className = 'confetti-piece';
-      piece.style.left = Math.random() * 100 + '%';
-      piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-      piece.style.width = (Math.random() * 8 + 6) + 'px';
-      piece.style.height = (Math.random() * 8 + 6) + 'px';
-      piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
-      piece.style.animationDuration = (Math.random() * 2 + 2) + 's';
-      piece.style.animationDelay = (Math.random() * 3) + 's';
-      container.appendChild(piece);
+    const hearts = ['❤️','💕','💖','💗','💝','💘','🩷','♥️'];
+    for (let i = 0; i < 40; i++) {
+      const h = document.createElement('div');
+      h.className = 'confetti-heart';
+      h.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+      h.style.left = Math.random() * 100 + '%';
+      h.style.fontSize = (Math.random() * 1 + 0.8) + 'rem';
+      h.style.animationDuration = (Math.random() * 2.5 + 2.5) + 's';
+      h.style.animationDelay = (Math.random() * 4) + 's';
+      container.appendChild(h);
     }
-    setTimeout(() => container.style.display = 'none', 6000);
+    setTimeout(() => container.style.display = 'none', 8000);
+
+    // Floating background hearts
+    const bg = document.getElementById('heartsBg');
+    for (let i = 0; i < 15; i++) {
+      const fh = document.createElement('div');
+      fh.className = 'floating-heart';
+      fh.textContent = '♥';
+      fh.style.left = Math.random() * 100 + '%';
+      fh.style.fontSize = (Math.random() * 1.5 + 0.8) + 'rem';
+      fh.style.animationDuration = (Math.random() * 15 + 10) + 's';
+      fh.style.animationDelay = (Math.random() * 10) + 's';
+      bg.appendChild(fh);
+    }
   });
 </script>
 
