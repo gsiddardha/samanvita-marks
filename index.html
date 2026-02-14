@@ -1,18 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="valentine">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Samanvita's Report Card 💝</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --primary: #E91E63;
-    --secondary: #FF4081;
-    --bg: #1A0A14;
-    --card: #2D1525;
-    --text: #FFF0F5;
-    --muted: #C48BA0;
+  /* ===== THEME DEFINITIONS ===== */
+  [data-theme="valentine"] {
+    --bg: #1A0A14; --card: #2D1525; --text: #FFF0F5; --muted: #C48BA0;
+    --accent: #E91E63; --accent2: #FF4081; --accent-glow: rgba(233,30,99,0.15);
+    --border: rgba(233,30,99,0.12); --bar-bg: rgba(233,30,99,0.1);
+    --badge-text: '💝 CLASS IX — CBSE FINALS 2025';
+    --heart-char: '♥'; --confetti-type: hearts;
+  }
+  [data-theme="dark"] {
+    --bg: #0F0E17; --card: #1A1932; --text: #FFFFFE; --muted: #A7A9BE;
+    --accent: #6C63FF; --accent2: #B06AB3; --accent-glow: rgba(108,99,255,0.15);
+    --border: rgba(255,255,255,0.06); --bar-bg: rgba(255,255,255,0.06);
+  }
+  [data-theme="ocean"] {
+    --bg: #0A1628; --card: #132240; --text: #E8F4FD; --muted: #7BA3C9;
+    --accent: #00BCD4; --accent2: #26C6DA; --accent-glow: rgba(0,188,212,0.15);
+    --border: rgba(0,188,212,0.12); --bar-bg: rgba(0,188,212,0.1);
+  }
+  [data-theme="sunset"] {
+    --bg: #1A0E0A; --card: #2D1E15; --text: #FFF5F0; --muted: #C4A08A;
+    --accent: #FF6B35; --accent2: #F7931E; --accent-glow: rgba(255,107,53,0.15);
+    --border: rgba(255,107,53,0.12); --bar-bg: rgba(255,107,53,0.1);
+  }
+  [data-theme="light"] {
+    --bg: #F5F0FF; --card: #FFFFFF; --text: #1A1A2E; --muted: #6B6B8D;
+    --accent: #6C63FF; --accent2: #897CFF; --accent-glow: rgba(108,99,255,0.1);
+    --border: rgba(108,99,255,0.12); --bar-bg: rgba(108,99,255,0.08);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -23,7 +43,44 @@
     color: var(--text);
     min-height: 100vh;
     overflow-x: hidden;
+    transition: background 0.5s, color 0.5s;
   }
+
+  /* Theme Switcher */
+  .theme-switcher {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 200;
+    display: flex;
+    gap: 6px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 6px 10px;
+    backdrop-filter: blur(10px);
+    transition: background 0.5s, border-color 0.5s;
+  }
+
+  .theme-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.3s;
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .theme-btn:hover { transform: scale(1.15); }
+  .theme-btn.active { border-color: var(--text); transform: scale(1.1); }
+  .theme-btn[data-t="valentine"] { background: linear-gradient(135deg, #E91E63, #FF4081); }
+  .theme-btn[data-t="dark"] { background: linear-gradient(135deg, #6C63FF, #B06AB3); }
+  .theme-btn[data-t="ocean"] { background: linear-gradient(135deg, #00BCD4, #26C6DA); }
+  .theme-btn[data-t="sunset"] { background: linear-gradient(135deg, #FF6B35, #F7931E); }
+  .theme-btn[data-t="light"] { background: linear-gradient(135deg, #E8E0FF, #FFF); }
 
   .bg-glow {
     position: fixed;
@@ -34,10 +91,11 @@
     opacity: 0.12;
     pointer-events: none;
     z-index: 0;
+    transition: background 0.5s;
   }
-  .glow1 { background: #E91E63; top: -200px; left: -100px; }
-  .glow2 { background: #FF4081; bottom: -200px; right: -100px; }
-  .glow3 { background: #C2185B; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+  .glow1 { background: var(--accent); top: -200px; left: -100px; }
+  .glow2 { background: var(--accent2); bottom: -200px; right: -100px; }
+  .glow3 { background: var(--accent); top: 50%; left: 50%; transform: translate(-50%,-50%); opacity: 0.08; }
 
   .hearts-bg {
     position: fixed;
@@ -60,7 +118,7 @@
   .container {
     max-width: 900px;
     margin: 0 auto;
-    padding: 40px 20px;
+    padding: 60px 20px 40px;
     position: relative;
     z-index: 1;
   }
@@ -73,7 +131,7 @@
 
   .badge {
     display: inline-block;
-    background: linear-gradient(135deg, #E91E63, #FF4081);
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
     padding: 6px 20px;
     border-radius: 50px;
     font-size: 0.8rem;
@@ -81,14 +139,15 @@
     letter-spacing: 1.5px;
     text-transform: uppercase;
     margin-bottom: 16px;
-    box-shadow: 0 4px 20px rgba(233,30,99,0.3);
+    box-shadow: 0 4px 20px var(--accent-glow);
+    color: #fff;
   }
 
   h1 {
     font-family: 'Poppins', sans-serif;
     font-size: 3rem;
     font-weight: 800;
-    background: linear-gradient(135deg, #fff 0%, #FF80AB 50%, #F48FB1 100%);
+    background: linear-gradient(135deg, var(--text) 0%, var(--accent2) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -102,8 +161,6 @@
   }
   .heart-icon {
     display: inline-block;
-    color: #E91E63;
-    -webkit-text-fill-color: #E91E63;
     animation: heartbeat 1.2s ease-in-out infinite;
   }
   @keyframes heartbeat {
@@ -124,18 +181,18 @@
 
   .stat-card {
     background: var(--card);
-    border: 1px solid rgba(233,30,99,0.15);
+    border: 1px solid var(--border);
     border-radius: 20px;
     padding: 24px 32px;
     text-align: center;
     flex: 1;
     min-width: 140px;
     max-width: 200px;
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition: transform 0.3s, box-shadow 0.3s, background 0.5s, border-color 0.5s;
   }
   .stat-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 20px 40px rgba(233,30,99,0.2);
+    box-shadow: 0 20px 40px var(--accent-glow);
   }
 
   .stat-value {
@@ -152,6 +209,7 @@
     margin-top: 4px;
     text-transform: uppercase;
     letter-spacing: 1px;
+    transition: color 0.5s;
   }
 
   .subjects-grid {
@@ -163,12 +221,12 @@
 
   .subject-card {
     background: var(--card);
-    border: 1px solid rgba(233,30,99,0.1);
+    border: 1px solid var(--border);
     border-radius: 24px;
     padding: 28px;
     position: relative;
     overflow: hidden;
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition: transform 0.3s, box-shadow 0.3s, background 0.5s, border-color 0.5s;
     animation: fadeInUp 0.6s ease both;
   }
   .subject-card:nth-child(1) { animation-delay: 0.1s; }
@@ -179,7 +237,7 @@
 
   .subject-card:hover {
     transform: translateY(-6px);
-    box-shadow: 0 25px 50px rgba(233,30,99,0.15);
+    box-shadow: 0 25px 50px var(--accent-glow);
   }
 
   .subject-card .top-bar {
@@ -205,7 +263,8 @@
     align-items: center;
     justify-content: center;
     font-size: 1.4rem;
-    background: rgba(233,30,99,0.12);
+    background: var(--accent-glow);
+    transition: background 0.5s;
   }
 
   .subject-name {
@@ -228,37 +287,31 @@
     color: var(--text);
     background: transparent;
     border: none;
-    border-bottom: 2px dashed rgba(233,30,99,0.3);
+    border-bottom: 2px dashed var(--border);
     width: 80px;
     outline: none;
-    transition: border-color 0.3s;
+    transition: border-color 0.3s, color 0.5s;
     -moz-appearance: textfield;
   }
   .score-input::-webkit-inner-spin-button,
   .score-input::-webkit-outer-spin-button { -webkit-appearance: none; }
-  .score-input:focus {
-    border-bottom-color: #FF4081;
-  }
+  .score-input:focus { border-bottom-color: var(--accent); }
 
   .max-score {
     color: var(--muted);
     font-size: 1rem;
     font-weight: 500;
-  }
-
-  .subject-total {
-    color: var(--muted);
-    font-size: 0.85rem;
-    margin-bottom: 16px;
+    transition: color 0.5s;
   }
 
   .progress-bar {
     width: 100%;
     height: 10px;
-    background: rgba(233,30,99,0.1);
+    background: var(--bar-bg);
     border-radius: 10px;
     overflow: hidden;
     margin-bottom: 10px;
+    transition: background 0.5s;
   }
 
   .progress-fill {
@@ -277,12 +330,13 @@
 
   .chart-section {
     background: var(--card);
-    border: 1px solid rgba(233,30,99,0.1);
+    border: 1px solid var(--border);
     border-radius: 24px;
     padding: 36px;
     margin-bottom: 50px;
     animation: fadeInUp 0.8s ease 0.6s both;
     overflow: hidden;
+    transition: background 0.5s, border-color 0.5s;
   }
 
   .chart-title {
@@ -343,6 +397,7 @@
     color: var(--muted);
     font-weight: 500;
     text-align: center;
+    transition: color 0.5s;
   }
 
   .footer {
@@ -369,8 +424,9 @@
   .valentine-msg {
     margin-top: 16px;
     font-size: 0.85rem;
-    color: #F06292;
+    color: var(--accent);
     opacity: 0.7;
+    transition: color 0.5s;
   }
 
   .edit-hint {
@@ -380,6 +436,7 @@
     margin-bottom: 30px;
     opacity: 0.6;
     animation: fadeInUp 0.8s ease 0.3s both;
+    transition: color 0.5s;
   }
 
   .confetti {
@@ -391,14 +448,14 @@
     overflow: hidden;
   }
 
-  .confetti-heart {
+  .confetti-piece {
     position: absolute;
     top: -30px;
-    animation: heartFall linear forwards;
+    animation: confettiFall linear forwards;
     opacity: 0.9;
   }
 
-  @keyframes heartFall {
+  @keyframes confettiFall {
     0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
     50% { opacity: 0.8; }
     100% { transform: translateY(100vh) rotate(360deg) scale(0.5); opacity: 0; }
@@ -408,13 +465,6 @@
     from { opacity: 0; transform: translateY(30px); }
     to { opacity: 1; transform: translateY(0); }
   }
-
-  /* Performance tier colors */
-  .tier-excellent { color: #4CAF50 !important; }
-  .tier-great { color: #8BC34A !important; }
-  .tier-good { color: #FF80AB !important; }
-  .tier-average { color: #FFB74D !important; }
-  .tier-needs-work { color: #FF7043 !important; }
 
   @media (max-width: 600px) {
     h1 { font-size: 2rem; }
@@ -428,10 +478,21 @@
     .chart-title { font-size: 1.1rem; margin-bottom: 16px; }
     .subject-card { padding: 22px; }
     .score-input { font-size: 1.8rem; width: 65px; }
+    .theme-switcher { top: 10px; right: 10px; padding: 4px 8px; gap: 4px; }
+    .theme-btn { width: 24px; height: 24px; }
+    .container { padding-top: 50px; }
   }
 </style>
 </head>
 <body>
+
+<div class="theme-switcher">
+  <button class="theme-btn active" data-t="valentine" title="Valentine 💝"></button>
+  <button class="theme-btn" data-t="dark" title="Dark 🌙"></button>
+  <button class="theme-btn" data-t="ocean" title="Ocean 🌊"></button>
+  <button class="theme-btn" data-t="sunset" title="Sunset 🌅"></button>
+  <button class="theme-btn" data-t="light" title="Light ☀️"></button>
+</div>
 
 <div class="bg-glow glow1"></div>
 <div class="bg-glow glow2"></div>
@@ -441,7 +502,7 @@
 
 <div class="container">
   <div class="hero">
-    <div class="badge">💝 Class IX — CBSE Finals 2025</div>
+    <div class="badge" id="badgeText">💝 Class IX — CBSE Finals 2025</div>
     <h1>Samanvita's Report Card</h1>
     <p class="subtitle" id="subtitleText">A stellar year. Here's how she did <span class="heart-icon">❤️</span></p>
   </div>
@@ -464,8 +525,7 @@
   <p class="edit-hint">✏️ Click on any score to edit — everything updates live!</p>
 
   <div class="subjects-grid" id="subjectsGrid">
-    <!-- Maths -->
-    <div class="subject-card" data-subject="maths">
+    <div class="subject-card">
       <div class="top-bar"></div>
       <div class="subject-header">
         <div class="subject-icon">🧮</div>
@@ -479,8 +539,7 @@
       <div class="percentage"></div>
     </div>
 
-    <!-- Science -->
-    <div class="subject-card" data-subject="science">
+    <div class="subject-card">
       <div class="top-bar"></div>
       <div class="subject-header">
         <div class="subject-icon">🔬</div>
@@ -494,8 +553,7 @@
       <div class="percentage"></div>
     </div>
 
-    <!-- Social -->
-    <div class="subject-card" data-subject="social">
+    <div class="subject-card">
       <div class="top-bar"></div>
       <div class="subject-header">
         <div class="subject-icon">🌍</div>
@@ -509,8 +567,7 @@
       <div class="percentage"></div>
     </div>
 
-    <!-- English -->
-    <div class="subject-card" data-subject="english">
+    <div class="subject-card">
       <div class="top-bar"></div>
       <div class="subject-header">
         <div class="subject-icon">📚</div>
@@ -524,8 +581,7 @@
       <div class="percentage"></div>
     </div>
 
-    <!-- German -->
-    <div class="subject-card" data-subject="german">
+    <div class="subject-card">
       <div class="top-bar"></div>
       <div class="subject-header">
         <div class="subject-icon">🇩🇪</div>
@@ -541,56 +597,64 @@
   </div>
 
   <div class="chart-section">
-    <div class="chart-title">💘 Performance Overview</div>
-    <div class="bar-chart" id="barChart">
-      <div class="bar-item" data-idx="0">
-        <div class="bar-value">62.5%</div>
-        <div class="bar"></div>
-        <div class="bar-label">Maths</div>
-      </div>
-      <div class="bar-item" data-idx="1">
-        <div class="bar-value">85%</div>
-        <div class="bar"></div>
-        <div class="bar-label">Science</div>
-      </div>
-      <div class="bar-item" data-idx="2">
-        <div class="bar-value">85%</div>
-        <div class="bar"></div>
-        <div class="bar-label">Social</div>
-      </div>
-      <div class="bar-item" data-idx="3">
-        <div class="bar-value">93.8%</div>
-        <div class="bar"></div>
-        <div class="bar-label">English</div>
-      </div>
-      <div class="bar-item" data-idx="4">
-        <div class="bar-value">90%</div>
-        <div class="bar"></div>
-        <div class="bar-label">German</div>
-      </div>
+    <div class="chart-title" id="chartTitle">💘 Performance Overview</div>
+    <div class="bar-chart">
+      <div class="bar-item"><div class="bar-value"></div><div class="bar"></div><div class="bar-label">Maths</div></div>
+      <div class="bar-item"><div class="bar-value"></div><div class="bar"></div><div class="bar-label">Science</div></div>
+      <div class="bar-item"><div class="bar-value"></div><div class="bar"></div><div class="bar-label">Social</div></div>
+      <div class="bar-item"><div class="bar-value"></div><div class="bar"></div><div class="bar-label">English</div></div>
+      <div class="bar-item"><div class="bar-value"></div><div class="bar"></div><div class="bar-label">German</div></div>
     </div>
   </div>
 
   <div class="footer">
     <div class="congrats" id="congratsText">💖 Congratulations Samanvita! 💖</div>
-    <p class="footer-msg" id="footerMsg">On to Class X — keep shining! ✨</p>
+    <p class="footer-msg" id="footerMsg">Excellent work — keep it up!</p>
     <p class="valentine-msg">Happy Valentine's Day 2025 💌</p>
   </div>
 </div>
 
 <script>
+// ===== THEME SWITCHER =====
+const themeIcons = {
+  valentine: '💘', dark: '📊', ocean: '🌊', sunset: '🌅', light: '📊'
+};
+
+document.querySelectorAll('.theme-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const t = btn.dataset.t;
+    document.documentElement.setAttribute('data-theme', t);
+    document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('chartTitle').textContent =
+      (t === 'valentine' ? '💘' : themeIcons[t] || '📊') + ' Performance Overview';
+    document.getElementById('badgeText').textContent =
+      (t === 'valentine' ? '💝 ' : '🎓 ') + 'Class IX — CBSE Finals 2025';
+    localStorage.setItem('theme', t);
+    recalc();
+  });
+});
+
+// Restore saved theme
+const saved = localStorage.getItem('theme');
+if (saved) {
+  document.documentElement.setAttribute('data-theme', saved);
+  document.querySelectorAll('.theme-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.t === saved);
+  });
+}
+
+// ===== PERFORMANCE TIERS =====
 const tiers = [
-  { min: 90, grade: 'A+', gradeEmoji: 'A+ 🏆', color: '#4CAF50', gradient: ['#43A047','#66BB6A'], msg: 'Outstanding performance!', congrats: '🏆 Phenomenal, Samanvita! 🏆', subtitle: 'An extraordinary year. Absolutely crushed it! 🔥' },
-  { min: 80, grade: 'A',  gradeEmoji: 'A 💕',  color: '#E91E63', gradient: ['#E91E63','#FF4081'], msg: 'Excellent work — keep it up!', congrats: '💖 Congratulations Samanvita! 💖', subtitle: 'A stellar year. Here\'s how she did' },
-  { min: 70, grade: 'B+', gradeEmoji: 'B+ 💪', color: '#8BC34A', gradient: ['#7CB342','#AED581'], msg: 'Great job! Room to grow even more.', congrats: '🌟 Well done, Samanvita! 🌟', subtitle: 'A solid year with great results' },
-  { min: 60, grade: 'B',  gradeEmoji: 'B 👍',  color: '#FF80AB', gradient: ['#F06292','#FF80AB'], msg: 'Good effort — a strong foundation to build on.', congrats: '👏 Good going, Samanvita! 👏', subtitle: 'A good year with promising scores' },
-  { min: 50, grade: 'C',  gradeEmoji: 'C 📝',  color: '#FFB74D', gradient: ['#FFA726','#FFB74D'], msg: 'Keep pushing — you\'ve got this!', congrats: '💪 Keep going, Samanvita! 💪', subtitle: 'Every step forward counts' },
-  { min: 0,  grade: 'D',  gradeEmoji: 'D 📖',  color: '#FF7043', gradient: ['#F4511E','#FF7043'], msg: 'Time to buckle down — you can do it!', congrats: '📚 Onwards & upwards, Samanvita! 📚', subtitle: 'The comeback starts now' },
+  { min: 90, gradeEmoji: 'A+ 🏆', color: '#4CAF50', msg: 'Outstanding performance!', congrats: '🏆 Phenomenal, Samanvita! 🏆', subtitle: 'An extraordinary year. Absolutely crushed it!' },
+  { min: 80, gradeEmoji: 'A 💕',  color: '#E91E63', msg: 'Excellent work — keep it up!', congrats: '💖 Congratulations Samanvita! 💖', subtitle: 'A stellar year. Here\'s how she did' },
+  { min: 70, gradeEmoji: 'B+ 💪', color: '#8BC34A', msg: 'Great job! Room to grow even more.', congrats: '🌟 Well done, Samanvita! 🌟', subtitle: 'A solid year with great results' },
+  { min: 60, gradeEmoji: 'B 👍',  color: '#FF80AB', msg: 'Good effort — a strong foundation to build on.', congrats: '👏 Good going, Samanvita! 👏', subtitle: 'A good year with promising scores' },
+  { min: 50, gradeEmoji: 'C 📝',  color: '#FFB74D', msg: 'Keep pushing — you\'ve got this!', congrats: '💪 Keep going, Samanvita! 💪', subtitle: 'Every step forward counts' },
+  { min: 0,  gradeEmoji: 'D 📖',  color: '#FF7043', msg: 'Time to buckle down — you can do it!', congrats: '📚 Onwards & upwards, Samanvita! 📚', subtitle: 'The comeback starts now' },
 ];
 
-function getTier(pct) {
-  return tiers.find(t => pct >= t.min) || tiers[tiers.length - 1];
-}
+function getTier(pct) { return tiers.find(t => pct >= t.min) || tiers[tiers.length - 1]; }
 
 function getSubjectGradient(pct) {
   if (pct >= 90) return ['#43A047','#66BB6A'];
@@ -617,26 +681,16 @@ function recalc() {
     total += val;
     maxTotal += max;
 
-    // Progress bar
-    const fill = card.querySelector('.progress-fill');
     const grad = getSubjectGradient(pct);
-    fill.style.width = pct + '%';
-    fill.style.background = `linear-gradient(90deg, ${grad[0]}, ${grad[1]})`;
-
-    // Top bar
+    card.querySelector('.progress-fill').style.width = pct + '%';
+    card.querySelector('.progress-fill').style.background = `linear-gradient(90deg, ${grad[0]}, ${grad[1]})`;
     card.querySelector('.top-bar').style.background = `linear-gradient(90deg, ${grad[0]}, ${grad[1]})`;
+    card.querySelector('.percentage').textContent = pct.toFixed(1) + '%';
 
-    // Percentage text
-    const pctEl = card.querySelector('.percentage');
-    pctEl.textContent = pct.toFixed(1) + '%';
-
-    // Bar chart
-    const barItem = barItems[i];
-    const bar = barItem.querySelector('.bar');
-    const barVal = barItem.querySelector('.bar-value');
+    const bar = barItems[i].querySelector('.bar');
+    barItems[i].querySelector('.bar-value').textContent = pct.toFixed(1) + '%';
     bar.style.height = (pct / 100 * 160) + 'px';
     bar.style.background = `linear-gradient(180deg, ${grad[0]}, ${grad[1]})`;
-    barVal.textContent = pct.toFixed(1) + '%';
   });
 
   const overallPct = maxTotal > 0 ? (total / maxTotal * 100) : 0;
@@ -648,7 +702,6 @@ function recalc() {
   document.getElementById('overallPct').style.color = tier.color;
   document.getElementById('gradeValue').textContent = tier.gradeEmoji;
   document.getElementById('gradeValue').style.color = tier.color;
-
   document.getElementById('congratsText').textContent = tier.congrats;
   document.getElementById('congratsText').style.color = tier.color;
   document.getElementById('footerMsg').textContent = tier.msg;
@@ -657,25 +710,24 @@ function recalc() {
   sub.innerHTML = tier.subtitle + ' <span class="heart-icon">❤️</span>';
 }
 
-// Event listeners
+// ===== EVENT LISTENERS =====
 document.querySelectorAll('.score-input').forEach(input => {
   input.addEventListener('input', recalc);
   input.addEventListener('change', recalc);
-  // Select all on focus for easy editing
   input.addEventListener('focus', () => input.select());
 });
 
-// Initial calc
+// ===== INIT =====
 window.addEventListener('load', () => {
   setTimeout(recalc, 100);
 
-  // Heart confetti
+  // Confetti
   const container = document.getElementById('confetti');
-  const hearts = ['❤️','💕','💖','💗','💝','💘','🩷','♥️'];
+  const pieces = ['❤️','💕','💖','💗','💝','💘','🩷','♥️','✨','⭐'];
   for (let i = 0; i < 40; i++) {
     const h = document.createElement('div');
-    h.className = 'confetti-heart';
-    h.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+    h.className = 'confetti-piece';
+    h.textContent = pieces[Math.floor(Math.random() * pieces.length)];
     h.style.left = Math.random() * 100 + '%';
     h.style.fontSize = (Math.random() * 1 + 0.8) + 'rem';
     h.style.animationDuration = (Math.random() * 2.5 + 2.5) + 's';
