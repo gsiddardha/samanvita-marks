@@ -47,11 +47,17 @@
   }
 
   /* Theme Switcher */
-  .theme-switcher {
+  .top-controls {
     position: fixed;
     top: 16px;
     right: 16px;
     z-index: 200;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .theme-switcher {
     display: flex;
     gap: 6px;
     background: var(--card);
@@ -61,6 +67,31 @@
     backdrop-filter: blur(10px);
     transition: background 0.5s, border-color 0.5s;
   }
+
+  .vday-toggle {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 4px 12px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: background 0.5s, border-color 0.5s, opacity 0.3s;
+    user-select: none;
+    height: 40px;
+  }
+  .vday-toggle:hover { opacity: 0.8; }
+  .vday-toggle .vday-label {
+    font-size: 0.65rem;
+    color: var(--muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .vday-toggle.off { opacity: 0.5; }
+  .vday-toggle.off .vday-icon { filter: grayscale(1); }
 
   .theme-btn {
     width: 28px;
@@ -439,6 +470,12 @@
     transition: color 0.5s;
   }
 
+  /* Valentine mode off */
+  body.vday-off .hearts-bg,
+  body.vday-off .confetti,
+  body.vday-off .valentine-msg { display: none !important; }
+  body.vday-off .heart-icon { display: none; }
+
   .confetti {
     position: fixed;
     top: 0; left: 0;
@@ -478,20 +515,29 @@
     .chart-title { font-size: 1.1rem; margin-bottom: 16px; }
     .subject-card { padding: 22px; }
     .score-input { font-size: 1.8rem; width: 65px; }
-    .theme-switcher { top: 10px; right: 10px; padding: 4px 8px; gap: 4px; }
+    .top-controls { top: 10px; right: 10px; gap: 6px; }
+    .theme-switcher { padding: 4px 8px; gap: 4px; }
     .theme-btn { width: 24px; height: 24px; }
+    .vday-toggle { padding: 4px 8px; height: 34px; }
+    .vday-toggle .vday-label { display: none; }
     .container { padding-top: 50px; }
   }
 </style>
 </head>
 <body>
 
-<div class="theme-switcher">
-  <button class="theme-btn active" data-t="valentine" title="Valentine 💝"></button>
-  <button class="theme-btn" data-t="dark" title="Dark 🌙"></button>
-  <button class="theme-btn" data-t="ocean" title="Ocean 🌊"></button>
-  <button class="theme-btn" data-t="sunset" title="Sunset 🌅"></button>
-  <button class="theme-btn" data-t="light" title="Light ☀️"></button>
+<div class="top-controls">
+  <div class="vday-toggle" id="vdayToggle" title="Toggle Valentine's decorations">
+    <span class="vday-icon">💝</span>
+    <span class="vday-label">V-Day</span>
+  </div>
+  <div class="theme-switcher">
+    <button class="theme-btn active" data-t="valentine" title="Valentine 💝"></button>
+    <button class="theme-btn" data-t="dark" title="Dark 🌙"></button>
+    <button class="theme-btn" data-t="ocean" title="Ocean 🌊"></button>
+    <button class="theme-btn" data-t="sunset" title="Sunset 🌅"></button>
+    <button class="theme-btn" data-t="light" title="Light ☀️"></button>
+  </div>
 </div>
 
 <div class="bg-glow glow1"></div>
@@ -615,6 +661,17 @@
 </div>
 
 <script>
+// ===== VALENTINE TOGGLE =====
+const vdayBtn = document.getElementById('vdayToggle');
+let vdayOn = localStorage.getItem('vday') !== 'off';
+function applyVday() {
+  document.body.classList.toggle('vday-off', !vdayOn);
+  vdayBtn.classList.toggle('off', !vdayOn);
+  localStorage.setItem('vday', vdayOn ? 'on' : 'off');
+}
+applyVday();
+vdayBtn.addEventListener('click', () => { vdayOn = !vdayOn; applyVday(); });
+
 // ===== THEME SWITCHER =====
 const themeIcons = {
   valentine: '💘', dark: '📊', ocean: '🌊', sunset: '🌅', light: '📊'
