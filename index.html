@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="valentine">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -532,11 +532,11 @@
     <span class="vday-label">V-Day</span>
   </div>
   <div class="theme-switcher">
-    <button class="theme-btn active" data-t="valentine" title="Valentine 💝"></button>
+    <button class="theme-btn" data-t="valentine" title="Valentine 💝"></button>
     <button class="theme-btn" data-t="dark" title="Dark 🌙"></button>
     <button class="theme-btn" data-t="ocean" title="Ocean 🌊"></button>
     <button class="theme-btn" data-t="sunset" title="Sunset 🌅"></button>
-    <button class="theme-btn" data-t="light" title="Light ☀️"></button>
+    <button class="theme-btn active" data-t="light" title="Light ☀️"></button>
   </div>
 </div>
 
@@ -663,7 +663,7 @@
 <script>
 // ===== VALENTINE TOGGLE =====
 const vdayBtn = document.getElementById('vdayToggle');
-let vdayOn = localStorage.getItem('vday') !== 'off';
+let vdayOn = localStorage.getItem('vday') === 'on';
 function applyVday() {
   document.body.classList.toggle('vday-off', !vdayOn);
   vdayBtn.classList.toggle('off', !vdayOn);
