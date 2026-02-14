@@ -9,10 +9,6 @@
   :root {
     --primary: #E91E63;
     --secondary: #FF4081;
-    --accent1: #FF80AB;
-    --accent2: #F48FB1;
-    --accent3: #FCE4EC;
-    --accent4: #AD1457;
     --bg: #1A0A14;
     --card: #2D1525;
     --text: #FFF0F5;
@@ -43,7 +39,6 @@
   .glow2 { background: #FF4081; bottom: -200px; right: -100px; }
   .glow3 { background: #C2185B; top: 50%; left: 50%; transform: translate(-50%,-50%); }
 
-  /* Floating hearts background */
   .hearts-bg {
     position: fixed;
     top: 0; left: 0;
@@ -54,7 +49,6 @@
   }
   .floating-heart {
     position: absolute;
-    font-size: 1.2rem;
     opacity: 0.08;
     animation: floatHeart linear infinite;
   }
@@ -105,14 +99,13 @@
   .subtitle {
     color: var(--muted);
     font-size: 1.1rem;
-    font-weight: 400;
   }
-  .subtitle .heart-icon {
+  .heart-icon {
+    display: inline-block;
     color: #E91E63;
     -webkit-text-fill-color: #E91E63;
     animation: heartbeat 1.2s ease-in-out infinite;
   }
-
   @keyframes heartbeat {
     0%, 100% { transform: scale(1); }
     15% { transform: scale(1.15); }
@@ -138,7 +131,6 @@
     flex: 1;
     min-width: 140px;
     max-width: 200px;
-    backdrop-filter: blur(10px);
     transition: transform 0.3s, box-shadow 0.3s;
   }
   .stat-card:hover {
@@ -150,10 +142,8 @@
     font-family: 'Poppins', sans-serif;
     font-size: 2rem;
     font-weight: 800;
+    transition: color 0.5s;
   }
-  .stat-value.highlight { color: #FF80AB; }
-  .stat-value.percent { color: #F06292; }
-  .stat-value.grade { color: #FF4081; }
 
   .stat-label {
     color: var(--muted);
@@ -192,18 +182,13 @@
     box-shadow: 0 25px 50px rgba(233,30,99,0.15);
   }
 
-  .subject-card::before {
-    content: '';
+  .subject-card .top-bar {
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 4px;
     border-radius: 4px 4px 0 0;
+    transition: background 0.5s;
   }
-  .subject-card:nth-child(1)::before { background: linear-gradient(90deg, #E91E63, #FF4081); }
-  .subject-card:nth-child(2)::before { background: linear-gradient(90deg, #AD1457, #E91E63); }
-  .subject-card:nth-child(3)::before { background: linear-gradient(90deg, #F06292, #FF80AB); }
-  .subject-card:nth-child(4)::before { background: linear-gradient(90deg, #C2185B, #F48FB1); }
-  .subject-card:nth-child(5)::before { background: linear-gradient(90deg, #FF4081, #FCE4EC); }
 
   .subject-header {
     display: flex;
@@ -220,12 +205,8 @@
     align-items: center;
     justify-content: center;
     font-size: 1.4rem;
+    background: rgba(233,30,99,0.12);
   }
-  .icon-maths { background: rgba(233,30,99,0.15); }
-  .icon-science { background: rgba(173,20,87,0.15); }
-  .icon-social { background: rgba(240,98,146,0.15); }
-  .icon-english { background: rgba(194,24,91,0.15); }
-  .icon-german { background: rgba(255,64,129,0.15); }
 
   .subject-name {
     font-family: 'Poppins', sans-serif;
@@ -233,11 +214,36 @@
     font-weight: 700;
   }
 
-  .subject-score {
+  .score-input-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+
+  .score-input {
     font-family: 'Poppins', sans-serif;
     font-size: 2.2rem;
     font-weight: 800;
-    margin-bottom: 4px;
+    color: var(--text);
+    background: transparent;
+    border: none;
+    border-bottom: 2px dashed rgba(233,30,99,0.3);
+    width: 80px;
+    outline: none;
+    transition: border-color 0.3s;
+    -moz-appearance: textfield;
+  }
+  .score-input::-webkit-inner-spin-button,
+  .score-input::-webkit-outer-spin-button { -webkit-appearance: none; }
+  .score-input:focus {
+    border-bottom-color: #FF4081;
+  }
+
+  .max-score {
+    color: var(--muted);
+    font-size: 1rem;
+    font-weight: 500;
   }
 
   .subject-total {
@@ -258,20 +264,15 @@
   .progress-fill {
     height: 100%;
     border-radius: 10px;
-    transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-    width: 0;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1), background 0.5s;
   }
-  .fill-maths { background: linear-gradient(90deg, #E91E63, #FF4081); }
-  .fill-science { background: linear-gradient(90deg, #AD1457, #E91E63); }
-  .fill-social { background: linear-gradient(90deg, #F06292, #FF80AB); }
-  .fill-english { background: linear-gradient(90deg, #C2185B, #F48FB1); }
-  .fill-german { background: linear-gradient(90deg, #FF4081, #FCE4EC); }
 
   .percentage {
     text-align: right;
     font-size: 0.85rem;
     font-weight: 600;
     color: var(--muted);
+    transition: color 0.5s;
   }
 
   .chart-section {
@@ -319,7 +320,7 @@
     width: 100%;
     border-radius: 12px 12px 6px 6px;
     min-height: 20px;
-    transition: height 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1), background 0.5s;
     position: relative;
   }
   .bar::after {
@@ -352,25 +353,32 @@
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 8px;
-    background: linear-gradient(135deg, #FF4081, #E91E63);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    transition: color 0.5s;
   }
 
-  .footer-text {
+  .footer-msg {
     color: var(--muted);
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+    transition: color 0.5s;
   }
 
   .valentine-msg {
-    margin-top: 20px;
+    margin-top: 16px;
     font-size: 0.85rem;
     color: #F06292;
     opacity: 0.7;
   }
 
-  /* Heart confetti */
+  .edit-hint {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.75rem;
+    margin-bottom: 30px;
+    opacity: 0.6;
+    animation: fadeInUp 0.8s ease 0.3s both;
+  }
+
   .confetti {
     position: fixed;
     top: 0; left: 0;
@@ -383,7 +391,6 @@
   .confetti-heart {
     position: absolute;
     top: -30px;
-    font-size: 1.2rem;
     animation: heartFall linear forwards;
     opacity: 0.9;
   }
@@ -399,6 +406,13 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
+  /* Performance tier colors */
+  .tier-excellent { color: #4CAF50 !important; }
+  .tier-great { color: #8BC34A !important; }
+  .tier-good { color: #FF80AB !important; }
+  .tier-average { color: #FFB74D !important; }
+  .tier-needs-work { color: #FF7043 !important; }
+
   @media (max-width: 600px) {
     h1 { font-size: 2rem; }
     .stats-row { gap: 10px; }
@@ -406,6 +420,7 @@
     .stat-value { font-size: 1.5rem; }
     .bar-chart { gap: 12px; height: 180px; }
     .subject-card { padding: 22px; }
+    .score-input { font-size: 1.8rem; width: 65px; }
   }
 </style>
 </head>
@@ -414,7 +429,6 @@
 <div class="bg-glow glow1"></div>
 <div class="bg-glow glow2"></div>
 <div class="bg-glow glow3"></div>
-
 <div class="hearts-bg" id="heartsBg"></div>
 <div class="confetti" id="confetti"></div>
 
@@ -422,159 +436,260 @@
   <div class="hero">
     <div class="badge">💝 Class IX — CBSE Finals 2025</div>
     <h1>Samanvita's Report Card</h1>
-    <p class="subtitle">A stellar year. Here's how she did <span class="heart-icon">❤️</span></p>
+    <p class="subtitle" id="subtitleText">A stellar year. Here's how she did <span class="heart-icon">❤️</span></p>
   </div>
 
   <div class="stats-row">
     <div class="stat-card">
-      <div class="stat-value highlight">333</div>
+      <div class="stat-value" id="totalMarks">333</div>
       <div class="stat-label">Total Marks</div>
     </div>
     <div class="stat-card">
-      <div class="stat-value percent">83.3%</div>
+      <div class="stat-value" id="overallPct">83.3%</div>
       <div class="stat-label">Overall</div>
     </div>
     <div class="stat-card">
-      <div class="stat-value grade">A 💕</div>
+      <div class="stat-value" id="gradeValue">A 💕</div>
       <div class="stat-label">Grade</div>
     </div>
   </div>
 
-  <div class="subjects-grid">
-    <div class="subject-card">
+  <p class="edit-hint">✏️ Click on any score to edit — everything updates live!</p>
+
+  <div class="subjects-grid" id="subjectsGrid">
+    <!-- Maths -->
+    <div class="subject-card" data-subject="maths">
+      <div class="top-bar"></div>
       <div class="subject-header">
-        <div class="subject-icon icon-maths">🧮</div>
+        <div class="subject-icon">🧮</div>
         <div class="subject-name">Mathematics</div>
       </div>
-      <div class="subject-score">50</div>
-      <div class="subject-total">out of 80</div>
-      <div class="progress-bar"><div class="progress-fill fill-maths" data-width="62.5"></div></div>
-      <div class="percentage">62.5%</div>
+      <div class="score-input-row">
+        <input type="number" class="score-input" value="50" min="0" max="80" data-max="80">
+        <span class="max-score">/ 80</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill"></div></div>
+      <div class="percentage"></div>
     </div>
 
-    <div class="subject-card">
+    <!-- Science -->
+    <div class="subject-card" data-subject="science">
+      <div class="top-bar"></div>
       <div class="subject-header">
-        <div class="subject-icon icon-science">🔬</div>
+        <div class="subject-icon">🔬</div>
         <div class="subject-name">Science</div>
       </div>
-      <div class="subject-score">68</div>
-      <div class="subject-total">out of 80</div>
-      <div class="progress-bar"><div class="progress-fill fill-science" data-width="85"></div></div>
-      <div class="percentage">85%</div>
+      <div class="score-input-row">
+        <input type="number" class="score-input" value="68" min="0" max="80" data-max="80">
+        <span class="max-score">/ 80</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill"></div></div>
+      <div class="percentage"></div>
     </div>
 
-    <div class="subject-card">
+    <!-- Social -->
+    <div class="subject-card" data-subject="social">
+      <div class="top-bar"></div>
       <div class="subject-header">
-        <div class="subject-icon icon-social">🌍</div>
+        <div class="subject-icon">🌍</div>
         <div class="subject-name">Social Studies</div>
       </div>
-      <div class="subject-score">68</div>
-      <div class="subject-total">out of 80</div>
-      <div class="progress-bar"><div class="progress-fill fill-social" data-width="85"></div></div>
-      <div class="percentage">85%</div>
+      <div class="score-input-row">
+        <input type="number" class="score-input" value="68" min="0" max="80" data-max="80">
+        <span class="max-score">/ 80</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill"></div></div>
+      <div class="percentage"></div>
     </div>
 
-    <div class="subject-card">
+    <!-- English -->
+    <div class="subject-card" data-subject="english">
+      <div class="top-bar"></div>
       <div class="subject-header">
-        <div class="subject-icon icon-english">📚</div>
+        <div class="subject-icon">📚</div>
         <div class="subject-name">English</div>
       </div>
-      <div class="subject-score">75</div>
-      <div class="subject-total">out of 80</div>
-      <div class="progress-bar"><div class="progress-fill fill-english" data-width="93.75"></div></div>
-      <div class="percentage">93.8%</div>
+      <div class="score-input-row">
+        <input type="number" class="score-input" value="75" min="0" max="80" data-max="80">
+        <span class="max-score">/ 80</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill"></div></div>
+      <div class="percentage"></div>
     </div>
 
-    <div class="subject-card">
+    <!-- German -->
+    <div class="subject-card" data-subject="german">
+      <div class="top-bar"></div>
       <div class="subject-header">
-        <div class="subject-icon icon-german">🇩🇪</div>
+        <div class="subject-icon">🇩🇪</div>
         <div class="subject-name">German</div>
       </div>
-      <div class="subject-score">72</div>
-      <div class="subject-total">out of 80</div>
-      <div class="progress-bar"><div class="progress-fill fill-german" data-width="90"></div></div>
-      <div class="percentage">90%</div>
+      <div class="score-input-row">
+        <input type="number" class="score-input" value="72" min="0" max="80" data-max="80">
+        <span class="max-score">/ 80</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill"></div></div>
+      <div class="percentage"></div>
     </div>
   </div>
 
   <div class="chart-section">
     <div class="chart-title">💘 Performance Overview</div>
-    <div class="bar-chart">
-      <div class="bar-item">
+    <div class="bar-chart" id="barChart">
+      <div class="bar-item" data-idx="0">
         <div class="bar-value">62.5%</div>
-        <div class="bar" style="height: 0; background: linear-gradient(180deg, #E91E63, #FF4081);" data-height="62.5"></div>
+        <div class="bar"></div>
         <div class="bar-label">Maths</div>
       </div>
-      <div class="bar-item">
+      <div class="bar-item" data-idx="1">
         <div class="bar-value">85%</div>
-        <div class="bar" style="height: 0; background: linear-gradient(180deg, #AD1457, #E91E63);" data-height="85"></div>
+        <div class="bar"></div>
         <div class="bar-label">Science</div>
       </div>
-      <div class="bar-item">
+      <div class="bar-item" data-idx="2">
         <div class="bar-value">85%</div>
-        <div class="bar" style="height: 0; background: linear-gradient(180deg, #F06292, #FF80AB);" data-height="85"></div>
+        <div class="bar"></div>
         <div class="bar-label">Social</div>
       </div>
-      <div class="bar-item">
+      <div class="bar-item" data-idx="3">
         <div class="bar-value">93.8%</div>
-        <div class="bar" style="height: 0; background: linear-gradient(180deg, #C2185B, #F48FB1);" data-height="93.75"></div>
+        <div class="bar"></div>
         <div class="bar-label">English</div>
       </div>
-      <div class="bar-item">
+      <div class="bar-item" data-idx="4">
         <div class="bar-value">90%</div>
-        <div class="bar" style="height: 0; background: linear-gradient(180deg, #FF4081, #FCE4EC);" data-height="90"></div>
+        <div class="bar"></div>
         <div class="bar-label">German</div>
       </div>
     </div>
   </div>
 
   <div class="footer">
-    <div class="congrats">💖 Congratulations Samanvita! 💖</div>
-    <p class="footer-text">On to Class X — keep shining! ✨</p>
+    <div class="congrats" id="congratsText">💖 Congratulations Samanvita! 💖</div>
+    <p class="footer-msg" id="footerMsg">On to Class X — keep shining! ✨</p>
     <p class="valentine-msg">Happy Valentine's Day 2025 💌</p>
   </div>
 </div>
 
 <script>
-  // Animate progress bars & chart bars
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      document.querySelectorAll('.progress-fill').forEach(el => {
-        el.style.width = el.dataset.width + '%';
-      });
-      document.querySelectorAll('.bar').forEach(el => {
-        el.style.height = (el.dataset.height / 100 * 200) + 'px';
-      });
-    }, 300);
+const tiers = [
+  { min: 90, grade: 'A+', gradeEmoji: 'A+ 🏆', color: '#4CAF50', gradient: ['#43A047','#66BB6A'], msg: 'Outstanding performance!', congrats: '🏆 Phenomenal, Samanvita! 🏆', subtitle: 'An extraordinary year. Absolutely crushed it! 🔥' },
+  { min: 80, grade: 'A',  gradeEmoji: 'A 💕',  color: '#E91E63', gradient: ['#E91E63','#FF4081'], msg: 'Excellent work — keep it up!', congrats: '💖 Congratulations Samanvita! 💖', subtitle: 'A stellar year. Here\'s how she did' },
+  { min: 70, grade: 'B+', gradeEmoji: 'B+ 💪', color: '#8BC34A', gradient: ['#7CB342','#AED581'], msg: 'Great job! Room to grow even more.', congrats: '🌟 Well done, Samanvita! 🌟', subtitle: 'A solid year with great results' },
+  { min: 60, grade: 'B',  gradeEmoji: 'B 👍',  color: '#FF80AB', gradient: ['#F06292','#FF80AB'], msg: 'Good effort — a strong foundation to build on.', congrats: '👏 Good going, Samanvita! 👏', subtitle: 'A good year with promising scores' },
+  { min: 50, grade: 'C',  gradeEmoji: 'C 📝',  color: '#FFB74D', gradient: ['#FFA726','#FFB74D'], msg: 'Keep pushing — you\'ve got this!', congrats: '💪 Keep going, Samanvita! 💪', subtitle: 'Every step forward counts' },
+  { min: 0,  grade: 'D',  gradeEmoji: 'D 📖',  color: '#FF7043', gradient: ['#F4511E','#FF7043'], msg: 'Time to buckle down — you can do it!', congrats: '📚 Onwards & upwards, Samanvita! 📚', subtitle: 'The comeback starts now' },
+];
 
-    // Heart confetti
-    const container = document.getElementById('confetti');
-    const hearts = ['❤️','💕','💖','💗','💝','💘','🩷','♥️'];
-    for (let i = 0; i < 40; i++) {
-      const h = document.createElement('div');
-      h.className = 'confetti-heart';
-      h.textContent = hearts[Math.floor(Math.random() * hearts.length)];
-      h.style.left = Math.random() * 100 + '%';
-      h.style.fontSize = (Math.random() * 1 + 0.8) + 'rem';
-      h.style.animationDuration = (Math.random() * 2.5 + 2.5) + 's';
-      h.style.animationDelay = (Math.random() * 4) + 's';
-      container.appendChild(h);
-    }
-    setTimeout(() => container.style.display = 'none', 8000);
+function getTier(pct) {
+  return tiers.find(t => pct >= t.min) || tiers[tiers.length - 1];
+}
 
-    // Floating background hearts
-    const bg = document.getElementById('heartsBg');
-    for (let i = 0; i < 15; i++) {
-      const fh = document.createElement('div');
-      fh.className = 'floating-heart';
-      fh.textContent = '♥';
-      fh.style.left = Math.random() * 100 + '%';
-      fh.style.fontSize = (Math.random() * 1.5 + 0.8) + 'rem';
-      fh.style.animationDuration = (Math.random() * 15 + 10) + 's';
-      fh.style.animationDelay = (Math.random() * 10) + 's';
-      bg.appendChild(fh);
-    }
+function getSubjectGradient(pct) {
+  if (pct >= 90) return ['#43A047','#66BB6A'];
+  if (pct >= 80) return ['#E91E63','#FF4081'];
+  if (pct >= 70) return ['#F06292','#FF80AB'];
+  if (pct >= 60) return ['#FFB74D','#FFCC02'];
+  if (pct >= 50) return ['#FF7043','#FFAB91'];
+  return ['#E53935','#EF5350'];
+}
+
+function recalc() {
+  const cards = document.querySelectorAll('.subject-card');
+  const barItems = document.querySelectorAll('.bar-item');
+  let total = 0, maxTotal = 0;
+
+  cards.forEach((card, i) => {
+    const input = card.querySelector('.score-input');
+    const max = parseInt(input.dataset.max);
+    let val = parseInt(input.value) || 0;
+    if (val > max) { val = max; input.value = max; }
+    if (val < 0) { val = 0; input.value = 0; }
+
+    const pct = (val / max * 100);
+    total += val;
+    maxTotal += max;
+
+    // Progress bar
+    const fill = card.querySelector('.progress-fill');
+    const grad = getSubjectGradient(pct);
+    fill.style.width = pct + '%';
+    fill.style.background = `linear-gradient(90deg, ${grad[0]}, ${grad[1]})`;
+
+    // Top bar
+    card.querySelector('.top-bar').style.background = `linear-gradient(90deg, ${grad[0]}, ${grad[1]})`;
+
+    // Percentage text
+    const pctEl = card.querySelector('.percentage');
+    pctEl.textContent = pct.toFixed(1) + '%';
+
+    // Bar chart
+    const barItem = barItems[i];
+    const bar = barItem.querySelector('.bar');
+    const barVal = barItem.querySelector('.bar-value');
+    bar.style.height = (pct / 100 * 200) + 'px';
+    bar.style.background = `linear-gradient(180deg, ${grad[0]}, ${grad[1]})`;
+    barVal.textContent = pct.toFixed(1) + '%';
   });
+
+  const overallPct = maxTotal > 0 ? (total / maxTotal * 100) : 0;
+  const tier = getTier(overallPct);
+
+  document.getElementById('totalMarks').textContent = total;
+  document.getElementById('totalMarks').style.color = tier.color;
+  document.getElementById('overallPct').textContent = overallPct.toFixed(1) + '%';
+  document.getElementById('overallPct').style.color = tier.color;
+  document.getElementById('gradeValue').textContent = tier.gradeEmoji;
+  document.getElementById('gradeValue').style.color = tier.color;
+
+  document.getElementById('congratsText').textContent = tier.congrats;
+  document.getElementById('congratsText').style.color = tier.color;
+  document.getElementById('footerMsg').textContent = tier.msg;
+
+  const sub = document.getElementById('subtitleText');
+  sub.innerHTML = tier.subtitle + ' <span class="heart-icon">❤️</span>';
+}
+
+// Event listeners
+document.querySelectorAll('.score-input').forEach(input => {
+  input.addEventListener('input', recalc);
+  input.addEventListener('change', recalc);
+  // Select all on focus for easy editing
+  input.addEventListener('focus', () => input.select());
+});
+
+// Initial calc
+window.addEventListener('load', () => {
+  setTimeout(recalc, 100);
+
+  // Heart confetti
+  const container = document.getElementById('confetti');
+  const hearts = ['❤️','💕','💖','💗','💝','💘','🩷','♥️'];
+  for (let i = 0; i < 40; i++) {
+    const h = document.createElement('div');
+    h.className = 'confetti-heart';
+    h.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+    h.style.left = Math.random() * 100 + '%';
+    h.style.fontSize = (Math.random() * 1 + 0.8) + 'rem';
+    h.style.animationDuration = (Math.random() * 2.5 + 2.5) + 's';
+    h.style.animationDelay = (Math.random() * 4) + 's';
+    container.appendChild(h);
+  }
+  setTimeout(() => container.style.display = 'none', 8000);
+
+  // Floating hearts
+  const bg = document.getElementById('heartsBg');
+  for (let i = 0; i < 15; i++) {
+    const fh = document.createElement('div');
+    fh.className = 'floating-heart';
+    fh.textContent = '♥';
+    fh.style.left = Math.random() * 100 + '%';
+    fh.style.fontSize = (Math.random() * 1.5 + 0.8) + 'rem';
+    fh.style.animationDuration = (Math.random() * 15 + 10) + 's';
+    fh.style.animationDelay = (Math.random() * 10) + 's';
+    bg.appendChild(fh);
+  }
+});
 </script>
 
 </body>
